@@ -63,12 +63,56 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all 0.05s;
+      transition-timing-function: linear;
+    }
+
+    .min-hand {
+      background-color: orange;
+    }
+
+    .hour-hand {
+      background-color: red;
     }
 
   </style>
 
   <script>
+    const secondHand = document.querySelector(".second-hand");
+    const minHand = document.querySelector(".min-hand");
+    const hourHand = document.querySelector(".hour-hand");
 
+    function getDate() {
+      const now = new Date();
+      const seconds = now.getSeconds();
+      const minutes = now.getMinutes();
+      const hour  = now.getHours();
+      
+      const secondsDeg = ((seconds/60)*360)+90;
+      const minutesDeg = ((minutes/60)*360)+90;
+      const hourDeg = ((hour/12)*360)+90;
+
+      secondHand.style.transform = `rotate(${secondsDeg}deg)`;
+      minHand.style.transform = `rotate(${minutesDeg}deg)`;
+      hourHand.style.transform = `rotate(${hourDeg}deg)`;
+
+      if(seconds==0){
+        secondHand.style.transitionDuration = '0s';
+        minHand.style.transitionDuration = '0s';
+        hourHand.style.transitionDuration = '0s';
+      } else {
+        secondHand.style.transitionDuration = '0.05s';
+        minHand.style.transitionDuration = '0.05s';
+        hourHand.style.transitionDuration = '0.05s';  
+      }
+
+      console.log(hour);
+      console.log(minutes); 
+    }
+
+    setInterval(getDate, 1000);
 
   </script>
 </body>
